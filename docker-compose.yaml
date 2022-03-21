@@ -54,13 +54,16 @@ x-airflow-common:
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
+    - ./library-services-platform:/opt/airflow/library-services-platform
+    - ./marine-collections:/opt/airflow/marine-collections
+    - ./sdr:/opt/airflow/sdr
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -251,12 +254,15 @@ services:
       - airflow
 
   intake:
-    image: .
-    dockerfile:
+    build:
+      context: .
+      dockerfile: plugins/intake/Dockerfile
     volumes:
      - ./library-services-platform:/opt/intake/library-services-platform
-     - ./marine-species-collections:/opt/intake/marine-species-collections
-     - ./metadata-creation:/opt/intake/metadata-creation
+     - ./marine-species-collections:/opt/intake/marine-collections
+     - ./sdr:/opt/intake/sdr
+    ports:
+    - 5000:5000
 
   flower:
     <<: *airflow-common
@@ -274,12 +280,15 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
-  jupyterhub:
-    image: jupyterhub/jupyterhub
-    volumes:
-     - library-services-platform:
-    ports:
-      - 8000:8000
+  # jupyterhub:
+  #   image: jupyterhub/jupyterhub
+  #   volumes:
+  #    - ./library-services-platform:/library-services-platform
+  #    - ./marine-species-collections:/marine-species-collections
+  #    - ./metadata-creation:/metadata-creation
+  #    - ./plugins:/opt/airflow/plugins
+  #   ports:
+  #     - 8000:8000
 
   
   nginx:
@@ -292,6 +301,8 @@ services:
     ports:
       - "9130:9130"
     entrypoint: ["java", "-jar", "/usr/verticles/okapi-core-fat.jar", "dev"]
+
+  
 
 volumes:
   postgres-db-volume:

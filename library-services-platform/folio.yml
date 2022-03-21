@@ -1,0 +1,16 @@
+sources:
+  instances:
+    description: FOLIO Instances
+    driver: csv
+    args:
+      urlpath: 'instances.csv'
+  holdings:
+    description: FOLIO Holdings
+    driver: csv
+    args:
+      urlpath: 'holdings.csv'
+  items:
+    description: FOLIO Items
+    driver: csv
+    args:
+      urlpath: 'items.csv'
