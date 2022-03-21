@@ -6,5 +6,5 @@ intelligence  = FastAPI()
 
 @app.get("/")
 async def root():
-    return { "msg": "FOLIO mod-learning", 
+    return { "msg": "FOLIO mod-intelligence", 
              "version": __version__ }
