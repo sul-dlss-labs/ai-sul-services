@@ -36,6 +36,10 @@ a `docker-compose.yml` for most of the stack below for demonstration purposes.
 ### SDR Intake Catalog
 
 ### Known Systemic Racism Project
+1. Metadata for visualization and access - SB978 California Law Enforcement Agency Policy and Training Manuals 
+  1. Watch for changes in published documents and pull changes
+  2. Automate metadata extraction based on source URL and structured data in the document
+  3. Streamlit app for search
 
 [AIRFLOW]: https://airflow.apache.org/
 [DASK]: https://dask.org/
