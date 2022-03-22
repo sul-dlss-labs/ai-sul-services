@@ -72,6 +72,12 @@ x-airflow-common:
     postgres:
       condition: service_healthy
 
+x-mlflow-common:
+  &mlflow-common
+  build:
+    context: .
+    dockerfile: plugins/mlflow/Dockerfile
+
 services:
   postgres:
     image: postgres:13
@@ -289,6 +295,13 @@ services:
   #    - ./plugins:/opt/airflow/plugins
   #   ports:
   #     - 8000:8000
+
+
+  mlflow-server:
+    <<: *mlflow-common
+    command: mlflow server --host 0.0.0.0
+    ports:
+      - "5001:5000"
 
   
   nginx:
