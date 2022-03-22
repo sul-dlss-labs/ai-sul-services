@@ -3,4 +3,4 @@ sources:
     description: "Californa Marine Coastal Geography"
     driver: csv
     args:
-      urlpath: "gis/NamedPlaces_CA.csv"
+      urlpath: "{{ CATALOG_DIR }}gis/NamedPlaces_CA.csv"

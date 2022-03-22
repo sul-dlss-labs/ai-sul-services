@@ -3,14 +3,14 @@ sources:
     description: FOLIO Instances
     driver: csv
     args:
-      urlpath: 'instances.csv'
+      urlpath: '{{ CATALOG_DIR }}data/instances.csv'
   holdings:
     description: FOLIO Holdings
     driver: csv
     args:
-      urlpath: 'holdings.csv'
-  items:
+      urlpath: '{{ CATALOG_DIR }}data/holdings.csv'
+  folio_items:
     description: FOLIO Items
     driver: csv
     args:
-      urlpath: 'items.csv'
+      urlpath: '{{ CATALOG_DIR }}data/items.csv'
