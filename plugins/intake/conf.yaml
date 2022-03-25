@@ -4,4 +4,3 @@ port: 5000
 catalog_path:
   - /opt/intake/library-services-platform
   - /opt/intake/marine-species-collections
-  - /opt/intake/sdr

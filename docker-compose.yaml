@@ -265,8 +265,7 @@ services:
       dockerfile: plugins/intake/Dockerfile
     volumes:
      - ./library-services-platform:/opt/intake/library-services-platform
-     - ./marine-species-collections:/opt/intake/marine-collections
-     - ./sdr:/opt/intake/sdr
+     - ./marine-collections:/opt/intake/marine-collections
     ports:
     - 5000:5000
 
@@ -286,15 +285,14 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
-  # jupyterhub:
-  #   image: jupyterhub/jupyterhub
-  #   volumes:
-  #    - ./library-services-platform:/library-services-platform
-  #    - ./marine-species-collections:/marine-species-collections
-  #    - ./metadata-creation:/metadata-creation
-  #    - ./plugins:/opt/airflow/plugins
-  #   ports:
-  #     - 8000:8000
+  jupyterhub:
+    image: jupyterhub/jupyterhub
+    volumes:
+     - ./library-services-platform:/library-services-platform
+     - ./marine-collections:/marine-collections
+     - ./plugins:/opt/airflow/plugins
+    ports:
+      - 8000:8000
 
 
   mlflow-server:
@@ -305,7 +303,9 @@ services:
 
   
   nginx:
-    image: nginx:1.16.0-alpine 
+    build:
+      context: .
+      dockerfile: plugins/nginx/Dockerfile
     ports:
       - 80:80
 
