@@ -1,6 +1,6 @@
 sources:
-  californa:
-    description: "Californa Marine Coastal Geography"
+  california:
+    description: "California Marine Coastal Geography"
     driver: csv
     args:
       urlpath: "{{ CATALOG_DIR }}gis/NamedPlaces_CA.csv"
